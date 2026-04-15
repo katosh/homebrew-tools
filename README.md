@@ -4,7 +4,7 @@
 
 ```bash
 brew tap katosh/tools
-brew install agent-sandbox
+brew install <formula>
 ```
 
 ## Formulae
@@ -12,3 +12,4 @@ brew install agent-sandbox
 | Formula | Description |
 |---------|-------------|
 | [agent-sandbox](Formula/agent-sandbox.rb) | Kernel-enforced filesystem isolation for AI coding agents on Linux |
+| [labsh](Formula/labsh.rb) | Project-local JupyterLab management CLI for humans and AI agents |
