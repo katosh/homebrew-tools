@@ -2,7 +2,7 @@ class Labsh < Formula
   desc "Project-local JupyterLab management CLI for humans and AI agents"
   homepage "https://github.com/katosh/labsh"
   url "https://github.com/katosh/labsh/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "8543841590d8b10ebf676643509c7ffdaaa01ea98c9a56e6e9b89b8720d56d0d"
+  sha256 "40523be578bb0afe87b0a423a477bfa545316e3ef67d0e9f05f972d178eb1012"
   license "MIT"
 
   depends_on "uv"
@@ -25,6 +25,10 @@ class Labsh < Formula
 
       HTTPS with auto-generated self-signed certs:
         labsh start --https
+
+      Claude Code skill:
+        The `/labsh` slash command is installed to ~/.claude/commands/
+        for use as an AI agent skill.
 
       Full documentation:
         #{share}/doc/labsh/labsh.md
