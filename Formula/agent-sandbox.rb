@@ -3,8 +3,8 @@
 # To publish:
 #   1. Create a repo at github.com/katosh/homebrew-tools
 #   2. Place this file at Formula/agent-sandbox.rb in that repo
-#   3. Tag a release in the main repo: git tag -a v0.3.2 -m "Release v0.3.2" && git push --tags
-#   4. Compute the sha256: curl -sL https://github.com/katosh/agent_sandbox/archive/refs/tags/v0.3.2.tar.gz | shasum -a 256
+#   3. Tag a release in the main repo: git tag -a v0.3.3 -m "Release v0.3.3" && git push --tags
+#   4. Compute the sha256: curl -sL https://github.com/katosh/agent_sandbox/archive/refs/tags/v0.3.3.tar.gz | shasum -a 256
 #   5. Replace PLACEHOLDER_SHA256 below with the actual hash
 #
 # Users install with:
@@ -14,8 +14,8 @@
 class AgentSandbox < Formula
   desc "Kernel-enforced filesystem isolation for AI coding agents on Linux"
   homepage "https://github.com/katosh/agent_sandbox"
-  url "https://github.com/katosh/agent_sandbox/archive/refs/tags/v0.3.2.tar.gz"
-  sha256 "670cad9be6a25f68df9859b79f2d7b14f0e8cee60cd758ed3bdeb775c6ea4be3"
+  url "https://github.com/katosh/agent_sandbox/archive/refs/tags/v0.3.3.tar.gz"
+  sha256 "256ecd820f36437b2266a80defcd10d504d09f1629b780d354cf0a37e2919956"
   license "MIT"
 
   depends_on :linux
