@@ -1,8 +1,8 @@
 class Labsh < Formula
   desc "Project-local JupyterLab management CLI for humans and AI agents"
   homepage "https://github.com/katosh/labsh"
-  url "https://github.com/katosh/labsh/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "90ca80bbcdd4b1bd04f8a5df2943052d0a6ba338ba9a0b2219f38eb55a7e5bbc"
+  url "https://github.com/katosh/labsh/releases/download/v0.4.0/labsh-0.4.0.tar.gz"
+  sha256 "f8462388ff987d1a9ec3c06ec0050f60ea64502c2e91fa0567be26373d266b9f"
   license "MIT"
 
   depends_on "uv"
