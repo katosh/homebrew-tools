@@ -1,0 +1,58 @@
+# Homebrew formula for agent-sandbox (pre-release channel)
+#
+# Users install the pre-release with:
+#   brew tap katosh/tools
+#   brew install agent-sandbox-rc   # pre-release channel
+
+class AgentSandboxRc < Formula
+  desc "Kernel-enforced filesystem isolation for AI coding agents on Linux"
+  homepage "https://github.com/katosh/agent_sandbox"
+  url "https://github.com/katosh/agent_sandbox/releases/download/v0.13.1-rc.1/agent-sandbox-0.13.1-rc.1.tar.gz"
+  sha256 "2bf4415a06909659a61d368092dc7d44fc16c7b17f349954310b3809d1bea230"
+  license "MIT"
+
+  conflicts_with "agent-sandbox", because: "both install the same agent-sandbox binaries"
+
+  depends_on :linux
+
+  # NOTE: bubblewrap is intentionally NOT a dependency here.
+  # On Ubuntu 24.04+, AppArmor restricts unprivileged user namespaces and
+  # requires an AppArmor profile tied to the specific bwrap binary path.
+  # A Homebrew-installed bwrap (~/.linuxbrew/bin/bwrap) would shadow a
+  # working system bwrap (/usr/bin/bwrap) that already has the profile,
+  # breaking what was already working.  The sandbox auto-detects the best
+  # available backend (bwrap → firejail → landlock) at runtime.
+
+  def install
+    system "make", "install", "PREFIX=#{prefix}"
+  end
+
+  def caveats
+    <<~EOS
+      The sandbox needs at least one isolation backend.  It auto-detects
+      the best available at runtime (bwrap > firejail > landlock).
+
+      If you don't have one yet, the recommended option is bubblewrap:
+        brew install bubblewrap
+
+      Note: on Ubuntu 24.04+, a Homebrew-installed bwrap may need an
+      AppArmor profile.  If bwrap fails, a system-installed bwrap
+      (apt/dnf) with the profile is the simplest fix — see:
+        #{share}/doc/agent-sandbox/README.md  (Troubleshooting section)
+
+      Configure the sandbox:
+        agent-sandbox bash -c 'echo sandbox works'   # auto-creates config dir
+        cp #{lib}/agent-sandbox/sandbox.conf ~/.config/agent-sandbox/sandbox.conf
+        $EDITOR ~/.config/agent-sandbox/sandbox.conf
+
+      Quick start:
+        cd /path/to/your/project
+        agent-sandbox claude       # Claude Code, sandboxed
+        agent-sandbox bash         # interactive shell
+    EOS
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/agent-sandbox --version")
+  end
+end
