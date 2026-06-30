@@ -15,6 +15,21 @@ class AgentSandboxRc < Formula
 
   depends_on :linux
 
+  # NOTE: there is intentionally NO `depends_on "gcc"` (or "glibc").
+  # agent-sandbox is pure POSIX shell; `make install` compiles nothing
+  # ("make clean" prints "Nothing to build"), and its only ELF — the bundled
+  # `pasta` network helper — is statically linked (`ldd` → "not a dynamic
+  # executable"; zero libgcc_s/libstdc++/GLIBCXX needs).  On a host whose glibc
+  # is older than Homebrew's CI baseline (< 2.39, e.g. EOL Ubuntu 18.04),
+  # `brew deps --annotate` will still show `gcc [implicit]` + `glibc [implicit]`:
+  # that is Homebrew's host-global implicit runtime, injected into EVERY formula
+  # (DependencyCollector#gcc_dep_if_needed, gated by host glibc/libstdc++
+  # version, not by this formula), and it CANNOT be dropped from the formula —
+  # shipping a bottle does not avoid it either.  If that implicit gcc triggers a
+  # failing from-source build on such a host, install with
+  # `--ignore-dependencies` (safe: nothing links the GCC runtime).
+  # See README → "Installing on older hosts (glibc < 2.39)".
+
   # NOTE: bubblewrap is intentionally NOT a dependency here.
   # On Ubuntu 24.04+, AppArmor restricts unprivileged user namespaces and
   # requires an AppArmor profile tied to the specific bwrap binary path.
